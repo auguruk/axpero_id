@@ -19,21 +19,11 @@
                 </list>
             </field>
         </record>
-        <!-- ===================================================================
-             Extend the ADMIN user form (Settings > Users & Companies > Users)
-             =================================================================== -->
-    <!--
         <record id="view_users_form_inherit_company_email" model="ir.ui.view">
             <field name="name">res.users.form.company_email</field>
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
-            -->
-                <!--
-                    Insert a new "Company Email Signatures" page after the
-                    standard "Preferences" tab.
-                -->
-        <!--
                 <xpath expr="//page[@name='preferences']" position="after">
                     <page name="company_email_signatures"
                           string="Company Email Signatures"
@@ -66,20 +56,9 @@
                 </xpath>
             </field>
         </record>
-    -->
-        <!-- ===================================================================
-             Extend the USER PREFERENCES form (accessed via avatar menu)
-             Odoo 17+ uses base.view_users_form for the self-edit profile view;
-             this secondary inherit targets any simplified profile form if present.
-             =================================================================== -->
-<!--
         <record id="view_users_simple_form_inherit_company_email" model="ir.ui.view">
             <field name="name">res.users.simple.form.company_email</field>
             <field name="model">res.users</field>
-            -->
-            <!-- Targets the simplified "My Profile" form where one exists.
-                 If Odoo removes/renames this view, this record is safely ignored. -->
-<!--
             <field name="inherit_id" ref="base.view_users_simple_form" optional="True"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='preferences']" position="after">
@@ -108,6 +87,5 @@
                 </xpath>
             </field>
         </record>
--->
     </data>
 </odoo>
