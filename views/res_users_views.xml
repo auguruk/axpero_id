@@ -9,7 +9,6 @@
                       editable="bottom"
                       context="{'hide_user': True}">
                     <field name="company_id"
-                           domain="[('id', 'in', parent.company_ids)]"
                            options="{'no_create': True}"
                            required="1"/>
                     <field name="email" placeholder="leave blank to use default"/>
