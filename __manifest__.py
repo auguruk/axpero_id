@@ -32,7 +32,7 @@ Features
     'data': [
         'security/ir.model.access.csv',
         'security/res_users_company_email_rules.xml',
-        #'views/res_users_company_email_views.xml',
+        'views/res_users_company_email_views.xml',
         #'views/res_users_views.xml',
     ],
     'installable': True,
