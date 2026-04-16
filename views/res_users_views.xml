@@ -10,7 +10,7 @@
             <field name="name">res.users.company.email.inline.tree</field>
             <field name="model">res.users.company.email</field>
             <field name="arch" type="xml">
-                <!--
+
                     Displayed inside the user form; user_id is implicit from the
                     parent record so we hide it via context.
                 -->
