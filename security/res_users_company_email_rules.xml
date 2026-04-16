@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
 
-    <!--
-        Record rules for res.users.company.email
-        ==========================================
-        Two rules:
-
-        1.  Internal users – can only see and modify their OWN rows.
-            The rule is applied to base.group_user which covers all internal
-            users (including managers and admins who also belong to that group),
-            EXCEPT that the second rule below overrides access for members of
-            base.group_system (Settings / Technical group).
-
-        2.  System / Settings administrators – unrestricted access.
-            No domain filter → they can read and manage configs for all users,
-            which is required for initial setup and troubleshooting.
-    -->
-
-    <!-- Rule 1: Regular internal users see only their own records -->
-    <record id="rule_res_users_company_email_own" model="ir.rule">
-        <field name="name">User Company Email: own records only</field>
-        <field name="model_id" ref="model_res_users_company_email"/>
-        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
-        <field name="perm_read"   eval="True"/>
-        <field name="perm_write"  eval="True"/>
-        <field name="perm_create" eval="True"/>
-        <field name="perm_unlink" eval="True"/>
-        <!-- Only rows where the user_id matches the current logged-in user -->
-        <field name="domain_force">[('user_id', '=', user.id)]</field>
-    </record>
-
-    <!-- Rule 2: System admins (Settings group) have unrestricted access -->
-    <record id="rule_res_users_company_email_admin" model="ir.rule">
-        <field name="name">User Company Email: admin unrestricted</field>
-        <field name="model_id" ref="model_res_users_company_email"/>
-        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
-        <field name="perm_read"   eval="True"/>
-        <field name="perm_write"  eval="True"/>
-        <field name="perm_create" eval="True"/>
-        <field name="perm_unlink" eval="True"/>
-        <!-- No domain restriction -->
-        <field name="domain_force">[(1, '=', 1)]</field>
-    </record>
-
+        <!--
+            Record rules for res.users.company.email
+            ==========================================
+            Two rules:
+    
+            1.  Internal users – can only see and modify their OWN rows.
+                The rule is applied to base.group_user which covers all internal
+                users (including managers and admins who also belong to that group),
+                EXCEPT that the second rule below overrides access for members of
+                base.group_system (Settings / Technical group).
+    
+            2.  System / Settings administrators – unrestricted access.
+                No domain filter → they can read and manage configs for all users,
+                which is required for initial setup and troubleshooting.
+        -->
+    
+        <!-- Rule 1: Regular internal users see only their own records -->
+        <record id="rule_res_users_company_email_own" model="ir.rule">
+            <field name="name">User Company Email: own records only</field>
+            <field name="model_id" ref="model_res_users_company_email"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read"   eval="True"/>
+            <field name="perm_write"  eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <!-- Only rows where the user_id matches the current logged-in user -->
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+    
+        <!-- Rule 2: System admins (Settings group) have unrestricted access -->
+        <record id="rule_res_users_company_email_admin" model="ir.rule">
+            <field name="name">User Company Email: admin unrestricted</field>
+            <field name="model_id" ref="model_res_users_company_email"/>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+            <field name="perm_read"   eval="True"/>
+            <field name="perm_write"  eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <!-- No domain restriction -->
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+    </data>
 </odoo>

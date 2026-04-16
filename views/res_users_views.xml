@@ -1,118 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
 
-    <!-- ===================================================================
-         Inline list view for company_email_ids used inside res.users form
-         =================================================================== -->
-
-    <record id="view_res_users_company_email_inline_tree" model="ir.ui.view">
-        <field name="name">res.users.company.email.inline.tree</field>
-        <field name="model">res.users.company.email</field>
-        <field name="arch" type="xml">
-            <!--
-                Displayed inside the user form; user_id is implicit from the
-                parent record so we hide it via context.
-            -->
-            <tree string="Company Email Configurations"
-                  editable="bottom"
-                  context="{'hide_user': True}">
-                <field name="company_id"
-                       domain="[('id', 'in', parent.company_ids)]"
-                       options="{'no_create': True}"
-                       required="1"/>
-                <field name="email" placeholder="leave blank to use default"/>
-                <field name="signature"
-                       widget="html"
-                       optional="show"
-                       string="Signature (preview in form)"/>
-            </tree>
-        </field>
-    </record>
-
-    <!-- ===================================================================
-         Extend the ADMIN user form (Settings > Users & Companies > Users)
-         =================================================================== -->
-
-    <record id="view_users_form_inherit_company_email" model="ir.ui.view">
-        <field name="name">res.users.form.company_email</field>
-        <field name="model">res.users</field>
-        <field name="inherit_id" ref="base.view_users_form"/>
-        <field name="arch" type="xml">
-            <!--
-                Insert a new "Company Email Signatures" page after the
-                standard "Preferences" tab.
-            -->
-            <xpath expr="//page[@name='preferences']" position="after">
-                <page name="company_email_signatures"
-                      string="Company Email Signatures"
-                      groups="base.group_user">
-                    <p class="text-muted">
-                        Configure a distinct outgoing email address and HTML
-                        signature for each company this user has access to.
-                        When the user composes a message while operating under
-                        a given company, these settings take effect
-                        automatically.
-                    </p>
-                    <field name="company_email_ids"
-                           nolabel="1"
-                           context="{'hide_user': True}"
-                           widget="one2many"
-                           mode="tree">
-                        <tree editable="bottom">
-                            <field name="company_id"
-                                   domain="[('id', 'in', parent.company_ids)]"
-                                   options="{'no_create': True}"
-                                   required="1"/>
-                            <field name="email"
-                                   placeholder="leave blank to use default"/>
-                            <field name="signature"
-                                   widget="html"
-                                   optional="show"/>
-                        </tree>
-                    </field>
-                </page>
-            </xpath>
-        </field>
-    </record>
-
-    <!-- ===================================================================
-         Extend the USER PREFERENCES form (accessed via avatar menu)
-         Odoo 17+ uses base.view_users_form for the self-edit profile view;
-         this secondary inherit targets any simplified profile form if present.
-         =================================================================== -->
-
-    <record id="view_users_simple_form_inherit_company_email" model="ir.ui.view">
-        <field name="name">res.users.simple.form.company_email</field>
-        <field name="model">res.users</field>
-        <!-- Targets the simplified "My Profile" form where one exists.
-             If Odoo removes/renames this view, this record is safely ignored. -->
-        <field name="inherit_id" ref="base.view_users_simple_form" optional="True"/>
-        <field name="arch" type="xml">
-            <xpath expr="//page[@name='preferences']" position="after">
-                <page name="company_email_signatures"
-                      string="Company Email Signatures">
-                    <p class="text-muted">
-                        Set a different outgoing email address and signature
-                        for each company you have access to.
-                    </p>
-                    <field name="company_email_ids"
-                           nolabel="1"
-                           context="{'hide_user': True}">
-                        <tree editable="bottom">
-                            <field name="company_id"
-                                   domain="[('id', 'in', parent.company_ids)]"
-                                   options="{'no_create': True}"
-                                   required="1"/>
-                            <field name="email"
-                                   placeholder="leave blank to use default"/>
-                            <field name="signature"
-                                   widget="html"
-                                   optional="show"/>
-                        </tree>
-                    </field>
-                </page>
-            </xpath>
-        </field>
-    </record>
-
+        <!-- ===================================================================
+             Inline list view for company_email_ids used inside res.users form
+             =================================================================== -->
+    
+        <record id="view_res_users_company_email_inline_tree" model="ir.ui.view">
+            <field name="name">res.users.company.email.inline.tree</field>
+            <field name="model">res.users.company.email</field>
+            <field name="arch" type="xml">
+                <!--
+                    Displayed inside the user form; user_id is implicit from the
+                    parent record so we hide it via context.
+                -->
+                <list string="Company Email Configurations"
+                      editable="bottom"
+                      context="{'hide_user': True}">
+                    <field name="company_id"
+                           domain="[('id', 'in', parent.company_ids)]"
+                           options="{'no_create': True}"
+                           required="1"/>
+                    <field name="email" placeholder="leave blank to use default"/>
+                    <field name="signature"
+                           widget="html"
+                           optional="show"
+                           string="Signature (preview in form)"/>
+                </list>
+            </field>
+        </record>
+    
+        <!-- ===================================================================
+             Extend the ADMIN user form (Settings > Users & Companies > Users)
+             =================================================================== -->
+    
+        <record id="view_users_form_inherit_company_email" model="ir.ui.view">
+            <field name="name">res.users.form.company_email</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <!--
+                    Insert a new "Company Email Signatures" page after the
+                    standard "Preferences" tab.
+                -->
+                <xpath expr="//page[@name='preferences']" position="after">
+                    <page name="company_email_signatures"
+                          string="Company Email Signatures"
+                          groups="base.group_user">
+                        <p class="text-muted">
+                            Configure a distinct outgoing email address and HTML
+                            signature for each company this user has access to.
+                            When the user composes a message while operating under
+                            a given company, these settings take effect
+                            automatically.
+                        </p>
+                        <field name="company_email_ids"
+                               nolabel="1"
+                               context="{'hide_user': True}"
+                               widget="one2many"
+                               mode="tree">
+                            <list editable="bottom">
+                                <field name="company_id"
+                                       domain="[('id', 'in', parent.company_ids)]"
+                                       options="{'no_create': True}"
+                                       required="1"/>
+                                <field name="email"
+                                       placeholder="leave blank to use default"/>
+                                <field name="signature"
+                                       widget="html"
+                                       optional="show"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    
+        <!-- ===================================================================
+             Extend the USER PREFERENCES form (accessed via avatar menu)
+             Odoo 17+ uses base.view_users_form for the self-edit profile view;
+             this secondary inherit targets any simplified profile form if present.
+             =================================================================== -->
+    
+        <record id="view_users_simple_form_inherit_company_email" model="ir.ui.view">
+            <field name="name">res.users.simple.form.company_email</field>
+            <field name="model">res.users</field>
+            <!-- Targets the simplified "My Profile" form where one exists.
+                 If Odoo removes/renames this view, this record is safely ignored. -->
+            <field name="inherit_id" ref="base.view_users_simple_form" optional="True"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='preferences']" position="after">
+                    <page name="company_email_signatures"
+                          string="Company Email Signatures">
+                        <p class="text-muted">
+                            Set a different outgoing email address and signature
+                            for each company you have access to.
+                        </p>
+                        <field name="company_email_ids"
+                               nolabel="1"
+                               context="{'hide_user': True}">
+                            <list editable="bottom">
+                                <field name="company_id"
+                                       domain="[('id', 'in', parent.company_ids)]"
+                                       options="{'no_create': True}"
+                                       required="1"/>
+                                <field name="email"
+                                       placeholder="leave blank to use default"/>
+                                <field name="signature"
+                                       widget="html"
+                                       optional="show"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
 </odoo>
