@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <!-- ===================================================================
-             Inline list view for company_email_ids used inside res.users form
-             =================================================================== -->
         <record id="view_res_users_company_email_inline_tree" model="ir.ui.view">
             <field name="name">res.users.company.email.inline.tree</field>
             <field name="model">res.users.company.email</field>
             <field name="arch" type="xml">
-                <!--
-                    Displayed inside the user form; user_id is implicit from the
-                    parent record so we hide it via context.
-                -->
                 <list string="Company Email Configurations"
                       editable="bottom"
                       context="{'hide_user': True}">
