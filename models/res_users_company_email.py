@@ -1,5 +1,4 @@
 from odoo import api, fields, models
-from odoo.tools import SQL
 
 
 class ResUsersCompanyEmail(models.Model):
@@ -74,12 +73,10 @@ class ResUsersCompanyEmail(models.Model):
     # Constraints
     # -------------------------------------------------------------------------
 
-    _constraints = [
-        models.Constraint(
-            'unique(user_id, company_id)',
-            'A user can only have one email configuration per company.',
-        ),
-    ]
+    _user_company_unique = models.Constraint(
+        'unique(user_id, company_id)',
+        'A user can only have one email configuration per company.',
+    )
 
     # -------------------------------------------------------------------------
     # Computed fields
