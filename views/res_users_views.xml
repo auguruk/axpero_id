@@ -5,7 +5,7 @@
         <!-- ===================================================================
              Inline list view for company_email_ids used inside res.users form
              =================================================================== -->
-    
+    <!--
         <record id="view_res_users_company_email_inline_tree" model="ir.ui.view">
             <field name="name">res.users.company.email.inline.tree</field>
             <field name="model">res.users.company.email</field>
@@ -14,6 +14,7 @@
                     Displayed inside the user form; user_id is implicit from the
                     parent record so we hide it via context.
                 -->
+        <!--
                 <list string="Company Email Configurations"
                       editable="bottom"
                       context="{'hide_user': True}">
@@ -29,7 +30,7 @@
                 </list>
             </field>
         </record>
-    
+    -->
         <!-- ===================================================================
              Extend the ADMIN user form (Settings > Users & Companies > Users)
              =================================================================== -->
@@ -81,13 +82,13 @@
              Odoo 17+ uses base.view_users_form for the self-edit profile view;
              this secondary inherit targets any simplified profile form if present.
              =================================================================== -->
-    <!--
+
         <record id="view_users_simple_form_inherit_company_email" model="ir.ui.view">
             <field name="name">res.users.simple.form.company_email</field>
             <field name="model">res.users</field>
             <!-- Targets the simplified "My Profile" form where one exists.
                  If Odoo removes/renames this view, this record is safely ignored. -->
-        <!--
+
             <field name="inherit_id" ref="base.view_users_simple_form" optional="True"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='preferences']" position="after">
@@ -116,6 +117,6 @@
                 </xpath>
             </field>
         </record>
-        -->
+
     </data>
 </odoo>
