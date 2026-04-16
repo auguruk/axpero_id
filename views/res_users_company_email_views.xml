@@ -56,10 +56,9 @@
                 <field name="user_id"/>
                 <field name="company_id"/>
                 <field name="email"/>
-                <group expand="0" string="Group By">
-                    <filter string="User"    name="group_user"    context="{'group_by': 'user_id'}"/>
-                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
-                </group>
+                <separator/>
+                <filter string="User"    name="group_user"    context="{'group_by': 'user_id'}"/>
+                <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
             </search>
         </field>
     </record>
