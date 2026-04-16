@@ -26,7 +26,7 @@ class ResUsersCompanyEmail(models.Model):
         ondelete='cascade',
         index=True,
     )
-    company_ids = fields.Many2one(
+    company_id = fields.Many2one(
         comodel_name='res.company',
         string='Company',
         required=True,
@@ -85,14 +85,14 @@ class ResUsersCompanyEmail(models.Model):
     # Computed fields
     # -------------------------------------------------------------------------
 
-    @api.depends('user_id', 'company_ids')
+    @api.depends('user_id', 'company_id')
     def _compute_display_name(self):
         for rec in self:
             parts = []
             if rec.user_id:
                 parts.append(rec.user_id.name)
-            if rec.company_ids:
-                parts.append(rec.company_ids.name)
+            if rec.company_id:
+                parts.append(rec.company_id.name)
             rec.display_name = ' – '.join(parts) if parts else ''
 
     # -------------------------------------------------------------------------
@@ -103,10 +103,10 @@ class ResUsersCompanyEmail(models.Model):
     def _onchange_user_id(self):
         """Restrict company selection to companies the chosen user belongs to."""
         if self.user_id:
-            allowed_company_ids = self.user_id.company_ids.ids
+            allowed_company_id = self.user_id.company_id.ids
             return {
                 'domain': {
-                    'company_id': [('id', 'in', allowed_company_ids)],
+                    'company_id': [('id', 'in', allowed_company_id)],
                 }
             }
         return {
