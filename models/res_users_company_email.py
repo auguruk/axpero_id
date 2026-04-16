@@ -25,7 +25,7 @@ class ResUsersCompanyEmail(models.Model):
         ondelete='cascade',
         index=True,
     )
-    company_id = fields.Many2one(
+    company_ids = fields.Many2one(
         comodel_name='res.company',
         string='Company',
         required=True,
@@ -91,8 +91,8 @@ class ResUsersCompanyEmail(models.Model):
             parts = []
             if rec.user_id:
                 parts.append(rec.user_id.name)
-            if rec.company_id:
-                parts.append(rec.company_id.name)
+            if rec.company_ids:
+                parts.append(rec.company_ids.name)
             rec.display_name = ' – '.join(parts) if parts else ''
 
     # -------------------------------------------------------------------------
