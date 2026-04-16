@@ -1,91 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <record id="view_res_users_company_email_inline_tree" model="ir.ui.view">
-            <field name="name">res.users.company.email.inline.tree</field>
-            <field name="model">res.users.company.email</field>
-            <field name="arch" type="xml">
-                <list string="Company Email Configurations"
-                      editable="bottom"
-                      context="{'hide_user': True}">
-                    <field name="company_id"
-                           options="{'no_create': True}"
-                           required="1"/>
-                    <field name="email" placeholder="leave blank to use default"/>
-                    <field name="signature"
-                           widget="html"
-                           optional="show"
-                           string="Signature (preview in form)"/>
-                </list>
-            </field>
-        </record>
-        <record id="view_users_form_inherit_company_email" model="ir.ui.view">
-            <field name="name">res.users.form.company_email</field>
-            <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[@name='preferences']" position="after">
-                    <page name="company_email_signatures"
-                          string="Company Email Signatures"
-                          groups="base.group_user">
-                        <p class="text-muted">
-                            Configure a distinct outgoing email address and HTML
-                            signature for each company this user has access to.
-                            When the user composes a message while operating under
-                            a given company, these settings take effect
-                            automatically.
-                        </p>
-                        <field name="company_email_ids"
-                               nolabel="1"
-                               context="{'hide_user': True}"
-                               widget="one2many"
-                               mode="tree">
-                            <list editable="bottom">
-                                <field name="company_id"
-                                       domain="[('id', 'in', parent.company_ids)]"
-                                       options="{'no_create': True}"
-                                       required="1"/>
-                                <field name="email"
-                                       placeholder="leave blank to use default"/>
-                                <field name="signature"
-                                       widget="html"
-                                       optional="show"/>
-                            </list>
-                        </field>
-                    </page>
-                </xpath>
-            </field>
-        </record>
-        <record id="view_users_simple_form_inherit_company_email" model="ir.ui.view">
-            <field name="name">res.users.simple.form.company_email</field>
-            <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_simple_form" optional="True"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[@name='preferences']" position="after">
-                    <page name="company_email_signatures"
-                          string="Company Email Signatures">
-                        <p class="text-muted">
-                            Set a different outgoing email address and signature
-                            for each company you have access to.
-                        </p>
-                        <field name="company_email_ids"
-                               nolabel="1"
-                               context="{'hide_user': True}">
-                            <list editable="bottom">
-                                <field name="company_id"
-                                       domain="[('id', 'in', parent.company_ids)]"
-                                       options="{'no_create': True}"
-                                       required="1"/>
-                                <field name="email"
-                                       placeholder="leave blank to use default"/>
-                                <field name="signature"
-                                       widget="html"
-                                       optional="show"/>
-                            </list>
-                        </field>
-                    </page>
-                </xpath>
-            </field>
-        </record>
-    </data>
+    <record id="view_res_users_company_email_inline_tree" model="ir.ui.view">
+        <field name="name">res.users.company.email.inline.tree</field>
+        <field name="model">res.users.company.email</field>
+        <field name="arch" type="xml">
+            <list string="Company Email Configurations"
+                  editable="bottom"
+                  context="{'hide_user': True}">
+                <field name="company_id"
+                       options="{'no_create': True}"
+                       required="1"/>
+                <field name="email" placeholder="leave blank to use default"/>
+                <field name="signature"
+                       widget="html"
+                       optional="show"
+                       string="Signature (preview in form)"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_users_form_inherit_company_email" model="ir.ui.view">
+        <field name="name">res.users.form.company_email</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']" position="after">
+                <page name="company_email_signatures"
+                      string="Company Email Signatures"
+                      groups="base.group_user">
+                    <p class="text-muted">
+                        Configure a distinct outgoing email address and HTML
+                        signature for each company this user has access to.
+                        When the user composes a message while operating under
+                        a given company, these settings take effect
+                        automatically.
+                    </p>
+                    <field name="company_email_ids"
+                           nolabel="1"
+                           context="{'hide_user': True}"
+                           widget="one2many"
+                           mode="tree">
+                        <list editable="bottom">
+                            <field name="company_id"
+                                   domain="[('id', 'in', parent.company_ids)]"
+                                   options="{'no_create': True}"
+                                   required="1"/>
+                            <field name="email"
+                                   placeholder="leave blank to use default"/>
+                            <field name="signature"
+                                   widget="html"
+                                   optional="show"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_users_simple_form_inherit_company_email" model="ir.ui.view">
+        <field name="name">res.users.simple.form.company_email</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_simple_form" optional="True"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']" position="after">
+                <page name="company_email_signatures"
+                      string="Company Email Signatures">
+                    <p class="text-muted">
+                        Set a different outgoing email address and signature
+                        for each company you have access to.
+                    </p>
+                    <field name="company_email_ids"
+                           nolabel="1"
+                           context="{'hide_user': True}">
+                        <list editable="bottom">
+                            <field name="company_id"
+                                   domain="[('id', 'in', parent.company_ids)]"
+                                   options="{'no_create': True}"
+                                   required="1"/>
+                            <field name="email"
+                                   placeholder="leave blank to use default"/>
+                            <field name="signature"
+                                   widget="html"
+                                   optional="show"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
 </odoo>
