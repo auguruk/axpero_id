@@ -85,7 +85,7 @@
     <menuitem
         id="menu_res_users_company_email"
         name="Company Email Signatures"
-        parent="mail.mail_menu_action_email"
+        parent="base.menu_email"
         action="action_res_users_company_email"
         sequence="50"
         groups="base.group_system"/>
