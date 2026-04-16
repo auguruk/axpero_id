@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools import SQL
 
 
 class ResUsersCompanyEmail(models.Model):
@@ -73,9 +74,8 @@ class ResUsersCompanyEmail(models.Model):
     # Constraints
     # -------------------------------------------------------------------------
 
-    _sql_constraints = [
-        (
-            'user_company_unique',
+    _constraints = [
+        models.Constraint(
             'unique(user_id, company_id)',
             'A user can only have one email configuration per company.',
         ),
@@ -85,7 +85,7 @@ class ResUsersCompanyEmail(models.Model):
     # Computed fields
     # -------------------------------------------------------------------------
 
-    @api.depends('user_id', 'company_id')
+    @api.depends('user_id', 'company_ids')
     def _compute_display_name(self):
         for rec in self:
             parts = []
