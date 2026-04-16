@@ -42,7 +42,7 @@
                                mode="tree">
                             <list editable="bottom">
                                 <field name="company_id"
-                                       domain="[('id', 'in', parent.company_ids)]"
+                                       domain="[('id', 'in', parent.company_ids.ids)]"
                                        options="{'no_create': True}"
                                        required="1"/>
                                 <field name="email"
@@ -73,7 +73,7 @@
                                context="{'hide_user': True}">
                             <list editable="bottom">
                                 <field name="company_id"
-                                       domain="[('id', 'in', parent.company_ids)]"
+                                       domain="[('id', 'in', parent.company_ids.ids)]"
                                        options="{'no_create': True}"
                                        required="1"/>
                                 <field name="email"
