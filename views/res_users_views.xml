@@ -5,11 +5,12 @@
             <field name="name">res.users.company.email.inline.tree</field>
             <field name="model">res.users.company.email</field>
             <field name="arch" type="xml">
-                <tree string="Company Email Configurations"
+                <list string="Company Email Configurations"
                       editable="bottom"
                       context="{'hide_user': True}">
                     <field name="company_id"
-                           domain="[('id', 'in', parent.company_ids.ids)]"
+                           context="{'allowed_company_ids': company_ids}"
+                           domain="[('id', 'in', context.get('allowed_company_ids', []))]"
                            options="{'no_create': True}"
                            required="1"/>
                     <field name="email" placeholder="leave blank to use default"/>
@@ -17,7 +18,7 @@
                            widget="html"
                            optional="show"
                            string="Signature (preview in form)"/>
-                </tree>
+                </list>
             </field>
         </record>
         <!-- ===================================================================
