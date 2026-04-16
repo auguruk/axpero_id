@@ -1,93 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
 
-    <!-- ===================================================================
-         res.users.company.email – standalone views (admin use)
-         =================================================================== -->
-
-    <!-- List view -->
-    <record id="view_res_users_company_email_tree" model="ir.ui.view">
-        <field name="name">res.users.company.email.tree</field>
-        <field name="model">res.users.company.email</field>
-        <field name="arch" type="xml">
-            <list string="Company Email Configurations" editable="bottom">
-                <field name="user_id"    optional="show" column_invisible="context.get('hide_user', False)"/>
-                <field name="company_id" optional="show"/>
-                <field name="email"      optional="show"/>
-                <field name="signature"  optional="hide" widget="html"/>
-            </list>
-        </field>
-    </record>
-
-    <!-- Form view -->
-    <record id="view_res_users_company_email_form" model="ir.ui.view">
-        <field name="name">res.users.company.email.form</field>
-        <field name="model">res.users.company.email</field>
-        <field name="arch" type="xml">
-            <form string="Company Email Configuration">
-                <sheet>
-                    <group>
-                        <group string="Identity">
-                            <field name="user_id"/>
-                            <field name="company_id"
-                                   domain="[('id', 'in', user_id.company_ids)]"
-                                   options="{'no_create': True}"/>
+        <!-- ===================================================================
+             res.users.company.email – standalone views (admin use)
+             =================================================================== -->
+    
+        <!-- List view -->
+        <record id="view_res_users_company_email_tree" model="ir.ui.view">
+            <field name="name">res.users.company.email.tree</field>
+            <field name="model">res.users.company.email</field>
+            <field name="arch" type="xml">
+                <list string="Company Email Configurations" editable="bottom">
+                    <field name="user_id"    optional="show" column_invisible="context.get('hide_user', False)"/>
+                    <field name="company_id" optional="show"/>
+                    <field name="email"      optional="show"/>
+                    <field name="signature"  optional="hide" widget="html"/>
+                </list>
+            </field>
+        </record>
+    
+        <!-- Form view -->
+        <record id="view_res_users_company_email_form" model="ir.ui.view">
+            <field name="name">res.users.company.email.form</field>
+            <field name="model">res.users.company.email</field>
+            <field name="arch" type="xml">
+                <form string="Company Email Configuration">
+                    <sheet>
+                        <group>
+                            <group string="Identity">
+                                <field name="user_id"/>
+                                <field name="company_id"
+                                       domain="[('id', 'in', user_id.company_ids)]"
+                                       options="{'no_create': True}"/>
+                            </group>
+                            <group string="Outgoing Email">
+                                <field name="email" placeholder="user@example.com"/>
+                            </group>
                         </group>
-                        <group string="Outgoing Email">
-                            <field name="email" placeholder="user@example.com"/>
-                        </group>
-                    </group>
-                    <separator string="Email Signature"/>
-                    <field name="signature"
-                           widget="html"
-                           style="min-height: 200px;"
-                           placeholder="Enter your email signature here…"/>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <!-- Search view -->
-    <record id="view_res_users_company_email_search" model="ir.ui.view">
-        <field name="name">res.users.company.email.search</field>
-        <field name="model">res.users.company.email</field>
-        <field name="arch" type="xml">
-            <search string="Search Email Configurations">
-                <field name="user_id"/>
-                <field name="company_id"/>
-                <field name="email"/>
-                <separator/>
-                <filter string="User"    name="group_user"    context="{'group_by': 'user_id'}"/>
-                <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
-            </search>
-        </field>
-    </record>
-
-    <!-- Window action -->
-    <record id="action_res_users_company_email" model="ir.actions.act_window">
-        <field name="name">Company Email Configurations</field>
-        <field name="res_model">res.users.company.email</field>
-        <field name="view_mode">list,form</field>
-        <field name="search_view_id" ref="view_res_users_company_email_search"/>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                No company email configurations yet.
-            </p>
-            <p>
-                Add a record for each user/company pair to override the
-                outgoing email address and signature used when composing
-                messages under that company.
-            </p>
-        </field>
-    </record>
-
-    <!-- Menu items under Settings > Technical > Email -->
-    <menuitem
-        id="menu_res_users_company_email"
-        name="Company Email Signatures"
-        parent="base.menu_email"
-        action="action_res_users_company_email"
-        sequence="50"
-        groups="base.group_system"/>
-
+                        <separator string="Email Signature"/>
+                        <field name="signature"
+                               widget="html"
+                               style="min-height: 200px;"
+                               placeholder="Enter your email signature here…"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    
+        <!-- Search view -->
+        <record id="view_res_users_company_email_search" model="ir.ui.view">
+            <field name="name">res.users.company.email.search</field>
+            <field name="model">res.users.company.email</field>
+            <field name="arch" type="xml">
+                <search string="Search Email Configurations">
+                    <field name="user_id"/>
+                    <field name="company_id"/>
+                    <field name="email"/>
+                    <separator/>
+                    <filter string="User"    name="group_user"    context="{'group_by': 'user_id'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"/>
+                </search>
+            </field>
+        </record>
+    
+        <!-- Window action -->
+        <record id="action_res_users_company_email" model="ir.actions.act_window">
+            <field name="name">Company Email Configurations</field>
+            <field name="res_model">res.users.company.email</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_res_users_company_email_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No company email configurations yet.
+                </p>
+                <p>
+                    Add a record for each user/company pair to override the
+                    outgoing email address and signature used when composing
+                    messages under that company.
+                </p>
+            </field>
+        </record>
+    
+        <!-- Menu items under Settings > Technical > Email -->
+        <menuitem
+            id="menu_res_users_company_email"
+            name="Company Email Signatures"
+            parent="base.menu_email"
+            action="action_res_users_company_email"
+            sequence="50"
+            groups="base.group_system"/>
+    </data>
 </odoo>
