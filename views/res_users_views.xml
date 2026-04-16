@@ -9,7 +9,7 @@
                       editable="bottom"
                       context="{'hide_user': True}">
                     <field name="company_id"
-                           context="{'allowed_company_ids': company_id}"
+                           context="{'allowed_company_ids': company_ids}"
                            domain="[('id', 'in', context.get('allowed_company_ids', []))]"
                            options="{'no_create': True}"
                            required="1"/>
