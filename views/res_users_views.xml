@@ -5,7 +5,8 @@
             <field name="name">res.users.company.email.inline.tree</field>
             <field name="model">res.users.company.email</field>
             <field name="arch" type="xml">
-                <list string="Company Email Configurations"
+                <tree string="Company Email Configurations"
+                      editable="bottom"
                       context="{'hide_user': True}">
                     <field name="company_id"
                            domain="[('id', 'in', parent.company_ids.ids)]"
@@ -16,7 +17,7 @@
                            widget="html"
                            optional="show"
                            string="Signature (preview in form)"/>
-                </list>
+                </tree>
             </field>
         </record>
         <!-- ===================================================================
