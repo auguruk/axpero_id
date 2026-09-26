@@ -30,8 +30,9 @@
                         <group>
                             <group string="Identity">
                                 <field name="user_id"/>
+                                <field name="user_company_ids" invisible="1"/>
                                 <field name="company_id"
-                                       domain="[('id', 'in', user_id.company_id)]"
+                                       domain="[('id', 'in', user_company_ids)]"
                                        options="{'no_create': True}"/>
                             </group>
                             <group string="Outgoing Email">

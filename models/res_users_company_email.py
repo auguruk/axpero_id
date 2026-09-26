@@ -65,6 +65,12 @@ class ResUsersCompanyEmail(models.Model):
         store=False,
         readonly=True,
     )
+    # Companies the user may operate under; limits the company choice in the form
+    user_company_ids = fields.Many2many(
+        string='User Companies',
+        related='user_id.company_ids',
+        readonly=True,
+    )
     display_name = fields.Char(
         string='Display Name',
         compute='_compute_display_name',
