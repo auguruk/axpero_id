@@ -1,6 +1,6 @@
 {
     'name': 'Axpero User Company Identity',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'category': 'Discuss/Email',
     'summary': 'Per-company email address and signature for users',
     'description': """
@@ -25,6 +25,8 @@ Features
   and signature into every new email draft automatically.
 * Record rules ensure users can only read/write their own configurations;
   admins retain full access.
+* Company email addresses must use a domain of that company: the domain of
+  the company's own email address or its email (alias) domain.
 * **Resend** button on sent emails (Settings > Technical > Emails): sends a
   copy with a new Message-Id to the same recipients; the original is kept.
     """,

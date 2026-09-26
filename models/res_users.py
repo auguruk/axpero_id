@@ -1,4 +1,6 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import AccessError
+from odoo.fields import Command
 from odoo.tools import formataddr
 
 
@@ -21,6 +23,62 @@ class ResUsers(models.Model):
             'HTML signature for that specific company context.'
         ),
     )
+
+    # -------------------------------------------------------------------------
+    # Self-service (Preferences)
+    # -------------------------------------------------------------------------
+
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS + ['company_email_ids']
+
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS + ['company_email_ids']
+
+    def write(self, vals):
+        # res.users writes a user's own safe fields as superuser; apply the company
+        # emails with the user's own rights instead, so the "own records only"
+        # rule on res.users.company.email still holds.
+        if 'company_email_ids' in vals and self == self.env.user and not self.env.su:
+            vals = dict(vals)
+            self._write_own_company_emails(vals.pop('company_email_ids'))
+            if not vals:
+                return True
+        return super().write(vals)
+
+    def _write_own_company_emails(self, commands):
+        """Apply one2many ``commands`` on the current user's company emails, as the user."""
+        self.ensure_one()
+        CompanyEmail = self.env['res.users.company.email']
+
+        def check_company(values):
+            if values.get('company_id') and values['company_id'] not in self.company_ids.ids:
+                raise AccessError(_('You can only set an email address for your own companies.'))
+            values.pop('user_id', None)
+            return values
+
+        def own(record_ids):
+            records = CompanyEmail.browse(record_ids).exists()
+            if records.filtered(lambda record: record.user_id != self):
+                raise AccessError(_('You can only change your own company email addresses.'))
+            return records
+
+        for command in commands:
+            code = command[0]
+            if code == Command.CREATE:
+                CompanyEmail.create({**check_company(dict(command[2])), 'user_id': self.id})
+            elif code == Command.UPDATE:
+                own([command[1]]).write(check_company(dict(command[2])))
+            elif code in (Command.DELETE, Command.UNLINK):
+                own([command[1]]).unlink()
+            elif code == Command.LINK:
+                own([command[1]])
+            elif code == Command.CLEAR:
+                self.company_email_ids.unlink()
+            elif code == Command.SET:
+                own(command[2])
+                (self.company_email_ids - CompanyEmail.browse(command[2])).unlink()
 
     # -------------------------------------------------------------------------
     # Public API

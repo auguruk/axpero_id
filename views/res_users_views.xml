@@ -54,5 +54,39 @@
                 </xpath>
             </field>
         </record>
+        <!-- Self-service: the user's own Preferences (avatar menu > My Preferences) -->
+        <record id="view_users_form_simple_modif_inherit_company_email" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.company_email</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='preferences_page']" position="after">
+                    <page name="company_email_signatures"
+                          string="Company Email Signatures">
+                        <p class="text-muted">
+                            Set a different outgoing email address and signature
+                            for each company you have access to.
+                        </p>
+                        <field name="company_ids" invisible="1"/>
+                        <field name="company_email_ids"
+                               nolabel="1"
+                               readonly="0"
+                               context="{'hide_user': True}">
+                            <list editable="bottom">
+                                <field name="company_id"
+                                       domain="[('id', 'in', parent.company_ids)]"
+                                       options="{'no_create': True}"
+                                       required="1"/>
+                                <field name="email"
+                                       placeholder="leave blank to use default"/>
+                                <field name="signature"
+                                       widget="html"
+                                       optional="show"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

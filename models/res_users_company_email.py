@@ -1,4 +1,6 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools.mail import email_domain_extract
 
 
 class ResUsersCompanyEmail(models.Model):
@@ -77,6 +79,34 @@ class ResUsersCompanyEmail(models.Model):
         'unique(user_id, company_id)',
         'A user can only have one email configuration per company.',
     )
+
+    @api.model
+    def _get_allowed_email_domains(self, company):
+        """Domains a company email address may use: the domain of the company's own
+        email address and the company's email (alias) domain."""
+        company = company.sudo()
+        domains = {email_domain_extract(company.email) if company.email else False,
+                   (company.alias_domain_id.name or '').strip().lower()}
+        return {domain for domain in domains if domain}
+
+    @api.constrains('email', 'company_id')
+    def _check_email_company_domain(self):
+        for config in self:
+            if not config.email:
+                continue
+            allowed = self._get_allowed_email_domains(config.company_id)
+            if not allowed:
+                raise ValidationError(_(
+                    '%(company)s has no email address or email domain, so no company email address '
+                    'can be set for it. Set one on the company first.', company=config.company_id.name))
+            domain = email_domain_extract(config.email)
+            if not domain:
+                raise ValidationError(_('%(email)s is not a valid email address.', email=config.email))
+            if domain not in allowed:
+                raise ValidationError(_(
+                    '%(email)s is not an address of %(company)s. Use an address at: %(domains)s.',
+                    email=config.email, company=config.company_id.name,
+                    domains=', '.join(f'@{domain}' for domain in sorted(allowed))))
 
     # -------------------------------------------------------------------------
     # Computed fields
