@@ -21,4 +21,18 @@
         </field>
     </record>
 
+    <!-- ===================================================================
+         Resend in the email form's cog (Actions) menu
+         =================================================================== -->
+
+    <record id="action_mail_mail_resend" model="ir.actions.server">
+        <field name="name">Resend</field>
+        <field name="model_id" ref="mail.model_mail_mail"/>
+        <field name="binding_model_id" ref="mail.model_mail_mail"/>
+        <field name="binding_view_types">form</field>
+        <field name="group_ids" eval="[(4, ref('base.group_system'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_resend()</field>
+    </record>
+
 </odoo>
