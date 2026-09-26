@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================================================================
+         Resend button on the email form (Settings > Technical > Emails)
+         =================================================================== -->
+
+    <record id="view_mail_form_resend" model="ir.ui.view">
+        <field name="name">mail.mail.form.resend</field>
+        <field name="model">mail.mail</field>
+        <field name="inherit_id" ref="mail.view_mail_form"/>
+        <field name="arch" type="xml">
+            <button name="mark_outgoing" position="after">
+                <button name="action_resend" string="Resend" type="object" icon="fa-repeat"
+                        invisible="state != 'sent'"
+                        confirm="Send this email again to the same recipients?"/>
+            </button>
+            <field name="scheduled_date" position="after">
+                <field name="resent_mail_id" invisible="not resent_mail_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

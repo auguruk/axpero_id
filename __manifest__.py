@@ -1,6 +1,6 @@
 {
     'name': 'Axpero User Company Identity',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Discuss/Email',
     'summary': 'Per-company email address and signature for users',
     'description': """
@@ -25,6 +25,8 @@ Features
   and signature into every new email draft automatically.
 * Record rules ensure users can only read/write their own configurations;
   admins retain full access.
+* **Resend** button on sent emails (Settings > Technical > Emails): sends a
+  copy with a new Message-Id to the same recipients; the original is kept.
     """,
     'author': 'Axpero Services Ltd',
     'website': 'https://www.axpero.com',
@@ -34,6 +36,7 @@ Features
         'security/res_users_company_email_rules.xml',
         'views/res_users_company_email_views.xml',
         'views/res_users_views.xml',
+        'views/mail_mail_views.xml',
     ],
     'installable': True,
     'application': False,
