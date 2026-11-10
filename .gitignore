@@ -1,0 +1,4 @@
+# PyCharm and Python cache files
+.idea/
+__pycache__/
+*.py[cod]
